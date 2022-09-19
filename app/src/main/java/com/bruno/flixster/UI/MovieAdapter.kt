@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bruno.flixster.Data.Movie
-import android.content.res.Resources
+
 import com.bruno.flixster.R
 import com.bumptech.glide.Glide
 
@@ -41,9 +41,16 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
             Log.i("Adapter", "Inside bind fun")
             title.text = movie.title
             overview.text=movie.overview
+            var image: String
 
+            val orientation = context.resources.configuration.orientation
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+                image = movie.backDropImageUrl
+            }else{
+                image = movie.posterImageUrl
+            }
 
-            Glide.with(context).load(movie.posterImageUrl).into(poster)
+            Glide.with(context).load(image).into(poster)
 
 
 
