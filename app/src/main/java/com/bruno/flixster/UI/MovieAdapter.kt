@@ -50,7 +50,7 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
                 image = movie.posterImageUrl
             }
 
-            Glide.with(context).load(image).into(poster)
+            Glide.with(context).load(image).placeholder(R.drawable.popcorn_time).into(poster)
 
 
 
