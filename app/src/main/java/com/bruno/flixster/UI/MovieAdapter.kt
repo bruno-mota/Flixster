@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bruno.flixster.Data.Movie
 import com.bruno.flixster.DetailActivity
-
 import com.bruno.flixster.R
 import com.bumptech.glide.Glide
+import android.util.Pair as UtilPair
 
 const val MOVIE_EXTRA = "MOVIE_EXTRA"
 
@@ -63,10 +64,15 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
         }
 
         override fun onClick(v: View?) {
-            Toast.makeText(context,"clicked",Toast.LENGTH_LONG).show()
+
             Log.i("Adapter", "onCLick")
             val movie = movies[adapterPosition]
             val intent = Intent(context,DetailActivity::class.java)
+            /*val p1 = Pair.create<View,String>(title, "title")
+            val p2 = Pair.cr<View,String>(overview, "overview")
+            //intent.putExtra(DetailActivity.)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,p1,p2)*/
             intent.putExtra(MOVIE_EXTRA,movie)
             context.startActivity(intent)
         }
