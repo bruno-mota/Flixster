@@ -21,6 +21,7 @@
 
     <TextView
         android:id="@+id/title"
+        android:transitionName="title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -36,6 +37,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     <TextView
         android:id="@+id/overview"
+        android:transitionName="overview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"

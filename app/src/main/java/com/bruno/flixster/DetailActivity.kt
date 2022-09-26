@@ -24,6 +24,7 @@ class DetailActivity : YouTubeBaseActivity() {
 
     private lateinit var ratingBar:RatingBar
     private lateinit var ytPlayerView:YouTubePlayerView
+    private var movieRating:Float = 0.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class DetailActivity : YouTubeBaseActivity() {
         tvTitle.text = movie.title
         tvOverview.text = movie.overview
         ratingBar.rating= movie.voteAverage.toFloat()
+        movieRating = movie.voteAverage.toFloat()
         val client = AsyncHttpClient()
 
         client.get(TRAILERS_URL.format(movie.movieId),object : JsonHttpResponseHandler(){
@@ -73,6 +75,11 @@ class DetailActivity : YouTubeBaseActivity() {
             ) {
                 Log.i(TAG,"onInitializationSuccess")
                 player?.cueVideo(youtubeKey)
+                if(movieRating>=7.5){
+                    player?.loadVideo(youtubeKey)
+                }else{
+                    player?.cueVideo(youtubeKey)
+                }
             }
 
             override fun onInitializationFailure(
