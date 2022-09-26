@@ -1,6 +1,7 @@
 package com.bruno.flixster.UI
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bruno.flixster.Data.Movie
+import com.bruno.flixster.DetailActivity
 
 import com.bruno.flixster.R
 import com.bumptech.glide.Glide
+
+const val MOVIE_EXTRA = "MOVIE_EXTRA"
+
 
 class MovieAdapter(private val context: Context, private val movies: List<Movie>)
     : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
@@ -33,16 +39,19 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
 
     override fun getItemCount()= movies.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         private val title = itemView.findViewById<TextView>(R.id.title)
         private val overview = itemView.findViewById<TextView>(R.id.overview)
         private val poster = itemView.findViewById<ImageView>(R.id.posterImg)
+
+        init{
+            itemView.setOnClickListener(this)
+        }
         fun bind(movie:Movie){
             Log.i("Adapter", "Inside bind fun")
             title.text = movie.title
             overview.text=movie.overview
-            var image: String
-
+            val image: String
             val orientation = context.resources.configuration.orientation
             if (orientation == Configuration.ORIENTATION_LANDSCAPE){
                 image = movie.backDropImageUrl
@@ -51,9 +60,15 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
             }
 
             Glide.with(context).load(image).placeholder(R.drawable.popcorn_time).into(poster)
+        }
 
-
-
+        override fun onClick(v: View?) {
+            Toast.makeText(context,"clicked",Toast.LENGTH_LONG).show()
+            Log.i("Adapter", "onCLick")
+            val movie = movies[adapterPosition]
+            val intent = Intent(context,DetailActivity::class.java)
+            intent.putExtra(MOVIE_EXTRA,movie)
+            context.startActivity(intent)
         }
     }
 }
