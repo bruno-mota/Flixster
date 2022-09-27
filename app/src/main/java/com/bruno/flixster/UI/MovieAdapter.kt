@@ -5,18 +5,17 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bruno.flixster.Data.Movie
 import com.bruno.flixster.DetailActivity
 import com.bruno.flixster.R
 import com.bumptech.glide.Glide
-import android.util.Pair as UtilPair
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 const val MOVIE_EXTRA = "MOVIE_EXTRA"
 
@@ -59,8 +58,13 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
             }else{
                 image = movie.posterImageUrl
             }
+            val radius = 25 // corner radius, higher value = more rounded
 
-            Glide.with(context).load(image).placeholder(R.drawable.popcorn_time).into(poster)
+            Glide.with(context)
+                .load(image)
+                .placeholder(R.drawable.popcorn_time).centerCrop()
+                .transform(RoundedCorners(radius))
+                .into(poster)
         }
 
         override fun onClick(v: View?) {
