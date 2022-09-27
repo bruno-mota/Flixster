@@ -43,7 +43,7 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
         private val title = itemView.findViewById<TextView>(R.id.title)
         private val overview = itemView.findViewById<TextView>(R.id.overview)
         private val poster = itemView.findViewById<ImageView>(R.id.posterImg)
-
+        private var playBtn = itemView.findViewById<ImageView>(R.id.playButtonImg)
         init{
             itemView.setOnClickListener(this)
         }
@@ -65,7 +65,11 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
                 .placeholder(R.drawable.popcorn_time).centerCrop()
                 .transform(RoundedCorners(radius))
                 .into(poster)
+            if (movie.voteAverage>=7.5){
+                playBtn.visibility = View.VISIBLE
+            }
         }
+
 
         override fun onClick(v: View?) {
 
